@@ -397,13 +397,18 @@ func (m model) View() string {
 	}
 
 	var b strings.Builder
-	b.WriteString(titleStyle.Render("CLEANER") + subStyle.Render(fmt.Sprintf("  Raiz: %s (%d encontrados)", m.root, len(m.items))) + "\n")
+	b.WriteString(titleStyle.Render("CLEANER"))
+	b.WriteString(subStyle.Render(fmt.Sprintf("  Raiz: %s (%d encontrados)", m.root, len(m.items))))
+	b.WriteString("\n")
 	if m.deleted > 0 {
-		b.WriteString(freedStyle.Render(fmt.Sprintf("Liberado en esta sesion: %s (%d borrados)", humanSize(m.freed), m.deleted)) + "\n")
+		b.WriteString(freedStyle.Render(fmt.Sprintf("Liberado en esta sesion: %s (%d borrados)", humanSize(m.freed), m.deleted)))
+		b.WriteString("\n")
 	}
 
 	if len(m.items) == 0 {
-		b.WriteString("\nNada que limpiar.\n\n" + subStyle.Render("[q] salir") + "\n")
+		b.WriteString("\nNada que limpiar.\n\n")
+		b.WriteString(subStyle.Render("[q] salir"))
+		b.WriteString("\n")
 		return b.String()
 	}
 
@@ -422,7 +427,9 @@ func (m model) View() string {
 		it := m.items[i]
 		if it.Category != prevCat {
 			prevCat = it.Category
-			b.WriteString("\n" + catStyle[it.Category].Render("── "+catTitle[it.Category]+" ──") + "\n")
+			b.WriteString("\n")
+			b.WriteString(catStyle[it.Category].Render("── " + catTitle[it.Category] + " ──"))
+			b.WriteString("\n")
 		}
 		cur := "  "
 		if i == m.cursor {
@@ -442,14 +449,21 @@ func (m model) View() string {
 	}
 
 	if m.cursor < len(m.items) && m.items[m.cursor].Desc != "" {
-		b.WriteString("\n" + titleStyle.Render("ℹ") + "  " + subStyle.Render(m.items[m.cursor].Desc) + "\n")
+		b.WriteString("\n")
+		b.WriteString(titleStyle.Render("ℹ"))
+		b.WriteString("  ")
+		b.WriteString(subStyle.Render(m.items[m.cursor].Desc))
+		b.WriteString("\n")
 	}
 	count, bytes := m.selectedStats()
-	b.WriteString(sizeStyle.Render(fmt.Sprintf("Seleccionado: %d items (%s)", count, humanSize(bytes))) + "\n")
+	b.WriteString(sizeStyle.Render(fmt.Sprintf("Seleccionado: %d items (%s)", count, humanSize(bytes))))
+	b.WriteString("\n")
 	if m.confirming {
-		b.WriteString(warnStyle.Render(fmt.Sprintf("¿CONFIRMAR BORRADO PERMANENTE de %d items (%s)? [y/N]", count, humanSize(bytes))) + "\n")
+		b.WriteString(warnStyle.Render(fmt.Sprintf("¿CONFIRMAR BORRADO PERMANENTE de %d items (%s)? [y/N]", count, humanSize(bytes))))
+		b.WriteString("\n")
 	} else {
-		b.WriteString(subStyle.Render("[↑/↓ o j/k] mover  [espacio] marcar  [a] marcar dev+cache  [enter/d] borrar  [q] salir") + "\n")
+		b.WriteString(subStyle.Render("[↑/↓ o j/k] mover  [espacio] marcar  [a] marcar dev+cache  [enter/d] borrar  [q] salir"))
+		b.WriteString("\n")
 	}
 	return b.String()
 }
