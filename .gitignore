@@ -1,0 +1,10 @@
+*.exe
+*.dll
+*.log
+.env
+.env.*
+*.pfx
+*.p12
+*.pem
+/dist/
+/build/
